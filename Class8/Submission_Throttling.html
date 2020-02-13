@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>
+            CLASS - 8
+        </title>
+        <style>
+            #container
+            {
+                border : solid 1px black;
+                display: none;
+            }
+            .fooditem
+            {
+                background-color: bisque;
+                color: blanchedalmond;
+            }
+            .fooditem:hover
+            {
+                background-color: antiquewhite;
+            }
+        </style>
+        <script>
+            function suggest()
+            {
+                var object = this;
+                this.timer = null;
+                this.search = null;
+                this.container = null;
+                this.url = null;
+                this.xhr = new XMLHttpRequest();
+                this.getterm = function() {
+                    this.search = document.getElementById("search");
+                    this.container = document.getElementById("container");
+                    if (this.timer)
+                    {
+                        clearTimeout(this.timer);
+                    }
+                    this.timer = setTimeout(this.sendterm,1000);
+                }
+                this.sendterm = function()
+                {
+                    object.url = "test.php?term="+object.search.value;
+                    if (localStorage.getItem(object.url))
+                    {
+                        var cacheRes = JSON.parse(localStorage.getItem(object.url));
+                        object.populatefood(cacheRes);
+                        console.log("From Browser Cache");
+                    }
+                    else
+                    {
+                        object.xhr.onreadystatechange = object.showresult;
+                        object.xhr.open("GET",object.url,true);
+                        object.xhr.send();
+                    }
+                }
+                this.showresult = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                    {
+                        var res = this.responseText;
+                        var res0 = JSON.parse(res);
+                        localStorage.setItem(object.url,res);
+                        if (res0.length == 0)
+                        {
+                            object.search.style.background = "red";
+                            object.search.style.font = "italics";
+                        }
+                        else
+                        {
+                            object.populatefood(res0);
+                        }
+                    }
+                }
+                this.populatefood = function(res0)
+                {
+                    object.container.innerHTML = "";
+                    for (f in res0)
+                    {
+                        var itemDiv = document.createElement("div");
+                        itemDiv.innerHTML = res0[f];
+                        itemDiv.className = "fooditem";
+                        object.container.appendChild(itemDiv);
+                    }
+                     object.container.style.display = "block";
+                } 
+            }
+            var obj = new suggest(); 
+        </script>
+    </head>
+    <body>
+        <table border = "5" cellpadding = "0">
+            <tr>
+                <td>Restaurant Name : </td>
+                <td><input type="text" id = "name"/></td>
+            </tr>
+            <tr>
+                <td>Food : </td>
+                <td><input type="text" id = "search" onkeyup = "obj.getterm()"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><div id = "container"></div></td>
+            </tr>
+        </table>
+    </body>
+</html>

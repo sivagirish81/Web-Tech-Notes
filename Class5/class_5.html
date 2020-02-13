@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<!--
+	<head>
+		<title> CLASS - 5 </title>
+	</head>
+-->
+	<script type="text/javascript">
+    var obj ={
+        xhr: new XMLHttpRequest(),
+        getVideo: function()
+		{
+			this.xhr.onreadystatechange = this.showVideo;
+			this.xhr.open("GET", "test_5.php", true);
+			this.xhr.responseType = "blob";
+			this.xhr.send();
+		},
+
+		showVideo: function()
+		{
+			if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+			{
+				data = this.response;
+				vid = document.createElement("video");
+				vid.controls = true;
+				vid.autoplay = true;
+				vid.src = URL.createObjectURL(data);
+				document.body.appendChild(vid);
+			}
+		}
+
+		};
+
+		// ready state 3 and 4 both work - when the response is large chunks we can see the difference betweeen them.
+		// Aborting a pending request
+	</script>
+	<body>
+		<button onclick="obj.getVideo()" value="get">Get video</button>
+	</body>
+</html>
+
+<!--
+Notes
++ Simple Request
++ Preflighted Request
+
++ headers(Access - Control - Allow - Methods : PUT,DELETE );
+		 (	"			"		"  - Origin	 :		*);
+		 (	"			"		"  - headers
+	
++ Cross Origin 
+
++ Subission Throttling
++ PF
++ MSD
++ Periodic Refresh
++ Fallback Pattern
+
+-->

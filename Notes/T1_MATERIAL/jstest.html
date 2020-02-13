@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS TEST</title>
+<script type="text/javascript">
+// Adding properties to a Javascript object
+/*obj = {}
+obj.prop1 = "Hello";
+obj.prop2 = "There";
+obj.wish = function()
+{
+
+
+}
+obj =
+{
+	prop1: "Hello",
+	prop2: "There",
+	wish: function()
+	{
+		alert("Good morning");
+	}
+}
+obj.wish();
+
+obj2 = new Object()
+function Rectangle(l,b)
+{
+	this.length = l;
+	this.breadth = b;
+	
+	this.area = function()
+	{
+		return this.length * this.breadth;
+
+	}
+}
+
+//obj = new Rectangle(5,6);
+//alert(obj.area());
+/*
+function someCall(msg)
+{
+	alert(msg + " " + this.length);
+}
+
+//Force a call on obj. someCall is NOT a member method
+//obj.someCall();
+someCall.call(obj,"Hello");*/
+function Square(l)
+{
+	//I don't want to create properties and methods.
+	// I want to use the Rectangle constructor
+	//Rectangle.call(this,l,l);
+
+}
+/*
+//Square.prototype = new Rectangle(10,10);
+Square.prototype = Rectangle.prototype;
+
+sq = new Square(10);
+alert(sq.area());*/
+obj = 
+{
+	usn: null,
+	foo: function()
+	{
+		alert(document.getElementById("usn").value);
+	}
+}
+alert(obj.usn);
+
+</script>
+</head>
+<body onload="obj.foo()"/>
+<input type="text" id="usn" value="Hi"/>
+</body>
+</html>

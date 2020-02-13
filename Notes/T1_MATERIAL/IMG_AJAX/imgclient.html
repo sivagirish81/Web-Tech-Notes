@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+<title>Image based AJAX</title>
+<script type="text/javascript">
+obj=
+{
+	usr:null,
+	img: null,
+	stat:null,
+	getUserStatus: function()
+	{
+		this.usr = document.getElementById("usr");
+		if(this.usr == null || this.usr.value == "")
+		{
+			alert("Nothing to fetch");
+			return;
+		}
+		else
+		{
+			//Create a new image for the AJAX call
+			this.img = document.createElement("img");
+			this.img.onload = this.success;
+			this.img.onerror =  this.failure;
+
+			//Now we can make the call to the server
+			//Remember, we can go cross-domain. No restriction on that.
+			// Note that the created image need not be a part of the GUI
+			// to make the AJAX call.
+			this.img.src = "http://localhost/imgserver.php?username=" + this.usr.value;
+			
+			//If you want the image to be part of the GUI
+			// document.body.appendChild(this.img);
+		}
+	},
+	
+	success: function()
+	{
+		//An image was sent by server. Lets check its size
+
+		obj.stat = document.getElementById("stat");
+		obj.stat.style.fontWeight = "bold";
+		if(obj.img.width == 1)
+		{
+			obj.stat.innerHTML = "Username available!!";
+			obj.stat.style.color = "blue";
+		}
+		else if(obj.img.width == 2)
+		{
+			obj.stat.innerHTML = "Username already taken!!";
+			obj.stat.style.color = "red";
+			obj.stat.style.fontStyle = "italic";
+			alert(document.cookie);
+		}
+	
+	},
+	
+	//Image failed to load. Maybe the server script had a problem?
+	failure: function()
+	{
+		obj.stat = document.getElementById("stat");
+		obj.stat.innerHTML = "Username may be available";
+	}
+}
+</script>
+</head>
+<body>
+<h2>User Registration</h2>
+<label>Username:<input type="text" id="usr" name="usr" onblur="obj.getUserStatus()"/><span id="stat"></span></label><p>
+<label>Pwd:<input type="password" id="pwd"/></label>
+</body>
+</html>

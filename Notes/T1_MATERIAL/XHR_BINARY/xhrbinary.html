@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<title>Binary Fetch with XHR</title>
+<script type="text/javascript">
+obj=
+{
+	xhr:null,
+	getImage: function()
+	{
+		this.xhr = new XMLHttpRequest();
+		this.xhr.onreadystatechange = this.showImage;
+		
+		//We need to be ready to receive binary data
+		this.xhr.responseType = "blob";
+		
+		this.xhr.open("GET", "http://localhost/getbin.php", true);
+		this.xhr.send();
+
+	},
+	
+	showImage: function()
+	{
+		if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+		{
+			//Binary data is contained in xhr.response
+			var data = obj.xhr.response;
+			//Create a new video element
+			var vid = document.createElement("video");
+			
+			vid.controls = true;
+			vid.autoplay = false;
+			
+			//Create a dummy URL from within the browser's memory
+			vid.src = URL.createObjectURL(data);
+			
+			document.body.appendChild(vid);
+	
+		}
+	}
+}
+</script>
+</head>
+<body>
+<input type="button" value="GET IMAGE" onclick="obj.getImage()"/>
+</body>
+</html>

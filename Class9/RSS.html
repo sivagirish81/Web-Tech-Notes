@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <style>
+            #outer
+            {
+                height : 20px;
+                border-top : 2px solid red;
+                border-bottom : 2px solid rebeccapurple;
+                border-left : transparent;
+                border-right: transparent;
+            }
+            #inner
+            {
+                position : absolute;
+                white-space : nowrap;
+            }
+        </style>
+        <script>
+            function init()
+            {
+                obj = new News();
+                obj.divinner = document.getElementById("inner");
+                obj.divinner.style.left = window.innerWidth - 5 + "px";
+                obj.scroll();
+                setInterval(obj.getNews,5000);
+            }
+            function News()
+            {
+                this.getNews = function()
+                {
+                    xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange =  obj.processNews;
+                    xhr.open("GET","RSS.php",true);
+                    xhr.send();
+                }
+                this.processNews = function()
+                {
+                    if (xhr.readyState == 4 && this.status == 200)
+                    {
+                        // Get elements by tag name item.
+                        root = this.responseXML.documentElement;
+                        item = root.getElementsByTagName("item")[0];
+                        title = root.getElementsByTagName("title")[0];
+                        link = root.getElementsByTagName("link")[0];
+                        desc = root.getElementsByTagName("description")[0];
+                        anchor = document.createElement("a");
+                        anchor.innerHTML = desc.firstChild.nodeValue;
+                        anchor.href = link.firstChild.nodeValue;
+                        obj.divinner.innerHTML = " ";
+                        obj.divinner.appendChild(anchor);
+                    }
+                }
+                this.scroll = function()
+                {
+                    if (obj.divinner.offsetLeft + obj.divinner.offsetWidth < 2)
+                    {
+                        obj.divinner.style.left = window.innerWidth - 5 + "px";
+                    }
+                    else
+                    {
+                        obj.divinner.style.left = obj.divinner.offsetLeft - 5 + "px";
+                    }
+                    setTimeout(obj.scroll,30);
+                }
+            }
+        </script>
+        <title>
+            CLASS - 9
+        </title>
+    </head>
+    <body onload = "init()">
+        <div id = "outer">
+            <div id = "inner">
+                STAND BY FOR THE HEADLINES................
+            </div>
+        </div>
+    </body>
+</html>

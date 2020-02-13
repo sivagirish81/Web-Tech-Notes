@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XHR ASYNC FILE UPLOAD</title>
+<script type="text/javascript">
+obj=
+{
+	xhr: new XMLHttpRequest(),
+	uploadCV: function()
+	{
+
+		//Register handler
+		//When events are registered via Javascript (as in the next line)
+		// then the registered function is called on the Object on which
+		// the event is registered. That is, in the example below,
+		// showFeed will fire on the "xhr" object. Which means, in the
+		// showFeed() function, "this" refers to xhr.
+		this.xhr.onreadystatechange = this.showFeed;
+		
+		//Get the files and prepare data to send to server
+		form = new FormData();
+		
+		cvelem = document.getElementById("cv");
+		
+		//Since we don't know how many files the user will select
+		// we should actually do this in a loop.
+		// The "files" array on an element is available only if
+		// the input "type" is "file". (See markup below)
+		// The user can select multiple files because of the "multiple"
+		// attribute in the <input type='file'> element.
+		// Right now, we assume the user will select 2 files to upload
+		file1 = cvelem.files[0];
+		file2 = cvelem.files[1];
+		
+		//add the files to the form
+		form.append("mycv1", file1);
+		form.append("mycv2", file2);
+		
+		//open a connection to the server. POST for now
+		//We don't need to set the "Content-type" when we use
+		// FormData() for submitting data.
+		this.xhr.open("POST", "http://localhost/savecv.php",true);
+		
+    	//Make the request
+		this.xhr.send(form);
+
+	},
+	showFeed: function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			// The server just acknowledges the receipt of the files
+			// and indicates whether it was successful in saving the files
+			// or not.
+			alert(this.responseText);
+		}
+	
+	}
+}
+</script>
+</head>
+<body>
+<input type="file" multiple id="cv"/><p>
+<input type="button" value="UPLOAD TO SERVER" onclick="obj.uploadCV()"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+<title>Binary Fetch with XHR</title>
+<script type="text/javascript">
+nextIndex = 1;
+
+//Register for the popstate. The popstate event fires whenever the 
+// user presses the "BACK" or "FORWARD" button in the browser
+window.onpopstate = restoreDetails;
+
+function restoreDetails(event)
+{
+	//event.state contains the saved object. See window.history.pushState()
+	var hist_details = event.state;
+
+	document.getElementById("movie").value = hist_details.movie;
+	document.getElementById("lead").value = hist_details.lead;
+	document.getElementById("year").value = hist_details.year;
+	document.getElementById("dir").value = hist_details.director;
+
+}
+
+obj=
+{
+	xhr:null,
+	movie: null,
+	getImage: function()
+	{
+		//Fetch from the text box
+		this.movie = document.getElementById("movie").value;
+		
+		this.xhr = new XMLHttpRequest();
+		this.xhr.onreadystatechange = this.showImage;
+	
+		this.xhr.open("GET", "http://localhost/getmovie.php?movie=" + this.movie, true);
+		this.xhr.send();
+
+	},
+	
+	showImage: function()
+	{
+		if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+		{
+			//We got serialized array. We need to convert
+			// that into an object
+			var movdetails = JSON.parse(obj.xhr.responseText);
+			document.getElementById("lead").value = movdetails.lead;
+			document.getElementById("year").value = movdetails.year;
+			document.getElementById("dir").value = movdetails.director;
+	
+			//Explicitly creating an object.
+			//In this case there is actually no need to , because...the 
+			//JSON is already with us.. (movdetails)
+			var histstate = new Object();
+			histstate.movie = obj.movie;
+			histstate.lead = movdetails.lead;
+			histstate.year = movdetails.year;
+			histstate.director = movdetails.director;
+			
+			//Lets save this for future use.
+			// Three parameters - the object to save, a label and 
+			// a URL (which is very important and needs to be unique)
+			window.history.pushState(histstate, "XHR HISTORY", "http://localhost/xhrhistory/next" + nextIndex++);
+		}
+	}
+}
+</script>
+</head>
+<body>
+<input type="text" id="movie"/><p>
+<input type="text" id="lead" readonly /><p>
+<input type="text" id="year" readonly /><p>
+<input type="text" id="dir" readonly /><p>
+<input type="button" value="GET IMAGE" onclick="obj.getImage()"/>
+</body>
+</html>

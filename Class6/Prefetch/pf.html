@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<script>
+			count=1;
+			var content=new Array(4);
+			function getContent()
+			{
+				xhr=new XMLHttpRequest;
+				xhr.onload=showContent;
+				xhr.open("GET","content.php?count="+(count++));
+				xhr.send();		
+			}
+			
+			function showContent()
+			{
+				//if(xhr.readyState==4 && xhr.status==200){
+				document.getElementById("b1").disabled=false;
+				document.getElementById("b2").style.display="block";
+				document.getElementById("b3").style.display="block";
+				document.getElementById("content").innerHTML=xhr.responseText;
+					//xhr.abort()
+				fetchmore();
+				//}
+			}
+			
+			function fetchmore()
+			{
+				console.log("fetchmore "+count)
+				//xhr.readyState=0;
+				xhr.onload=store;
+				xhr.open("GET","content.php?count="+(count++));
+				xhr.send();
+			}
+			function store()
+			{
+				//if(xhr.readyState==4 && xhr.status==200){
+				console.log("store "+count)
+				content[count-1]=this.responseText;
+				if(count==3)
+					fetchmore();
+				//}
+			}
+			/*
+			function showmore(ncount)
+			{
+				document.getElementById("content").innerHTML=content[ncount]
+			}
+			*/
+			function showmore(ncount){
+                setTimeout(function(){
+                    document.getElementById("content").innerHTML = content[ncount];
+                }, 2000);
+            }
+		</script>
+	</head>
+	<body>
+	<input type="button" id="b1" value="Page 1" onclick="getContent()"/>
+	<input style="display:none" type="button" id="b2" value="Page 2" onclick="showmore(2)"/>
+	<input style="display:none" type="button" id="b3" value="Page 3" onclick="showmore(3)"/>
+	<p id="content">
+	
+	</p>
+	</body>
+</html>

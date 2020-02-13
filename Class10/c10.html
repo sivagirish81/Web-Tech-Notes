@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>
+            Class - 10
+        </title>
+        <script>
+            var obj = 
+            {
+                timestamp : 0,
+                xhr : new XMLHttpRequest(),
+                getdata : function(timestamp)
+                {
+                    this.xhr.onreadystatechange = this.showdata;
+                    this.xhr.open("GET","c10.php?timestamp="+obj.timestamp,true);
+                    this.xhr.send();
+                },
+                showdata : function()
+                {
+                    if (this.readyState == 1 && this.status == 200)
+                    {
+                        var res = this.responseText;
+                        var res0 = JSON.parse(res);
+                        document.getElementById("content").innerHTML = res0;
+                        obj.timestamp = res0.t;
+                        obj.getdata(obj.timestamp);
+                    }
+                }
+            };
+        </script>
+    </head>
+    <body onload = "obj.getdata()">
+        <div id = "content">
+
+        </div>
+    </body>
+</html>

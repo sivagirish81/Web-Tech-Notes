@@ -1,0 +1,50 @@
+<html>
+<head>
+<title> Class - 7 </title>
+<style>
+.score{
+border:solid 5px blue;
+height:150px;
+width:200px;
+}
+
+</style></head>
+
+<script>
+
+xhr=new XMLHttpRequest();
+N = 2;
+function fetch()
+{
+	xhr.onload=show;
+	xhr.timeout = 4000;
+	xhr.ontimeout = backoff;
+	xhr.open("GET","test.php",true);
+	xhr.send();
+}
+
+function backoff()
+{
+	console.log("There is no connectivity");
+	setTimeout(fetch,2 * N * 1000);
+	N = N * 2;
+	console.log(N);
+}
+
+function show()
+{
+	var res = xhr.responseText;
+	var resArr = res.split(";");
+	document.getElementById("team1").innerHTML = resArr[0];
+	document.getElementById("team2").innerHTML = resArr[1];
+	document.getElementById("team3").innerHTML = resArr[2];
+	setInterval(fetch,2000);
+}
+</script>
+
+<body onload="fetch()">
+<div> Update...the scores</div>
+Team1: <div id="team1" class="score" value="team1"></div>
+Team2: <div id="team2" class="score" value="team2"></div>
+Team3: <div id="team3" class="score" value="team3"></div>
+</html>

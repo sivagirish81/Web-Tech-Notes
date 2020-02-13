@@ -1,0 +1,60 @@
+<html>
+
+<script type="text/javascript">
+    var obj ={
+        xhr: new XMLHttpRequest(),
+        //  USING GET 
+        // getmovie:function(){
+        //     mname = document.getElementById("mname");
+        //     this.xhr.open("GET","xhr_test.php?mname="+mname.value,true); //true - asynchronous
+        //     this.xhr.onreadystatechange = this.update; // bounding the method to corresponding event
+        //     this.xhr.send();
+        // },
+        // USING POST
+        // need to us e
+        getmovie:function(){
+            mname = document.getElementById("mname");
+            this.xhr.open("POST","xml_response.php",true); //true - asynchronous
+            this.xhr.onreadystatechange = this.update; // bounding the method to corresponding event
+            this.xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            this.xhr.send("mname="+mname.value);
+        },
+        update:function(){
+            if(this.readyState == 4 && this.status == 200){  // this is xhr is in this case because obj.xhr calls the update method. 
+                root = this.responseXML.documentElement;
+                node = root.getElementsByTagName("name")[0];
+                alert(node.firstChild.nodeValue);
+            }
+        }
+		getvideo : function()
+		{
+			this.xhr.onreadystatechange = this.showvideo;
+			this.xhr.open("GET","test.php",true);
+			this.xhr.responseType = "blob";
+			this.xhr.send();
+		}
+		showvideo: function()
+		{
+			if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+			{
+				data = this.response;
+				vid = document.createElement("video");
+				vid.controls = true;
+				vid.autoplay = true;
+				vid.src = URL.createObjectURL(data);
+				document.body.appendChild(vid);
+			}
+		}
+
+    };
+
+// ready state 3 and 4 both work - when the response is large chunks we can see the difference betweeen them.
+
+</script>
+
+Movie Name: <input type="text" id="mname" onblur="obj.getmovie()" /><p>
+Lead Name: <input type="text" style="width:320px" id="lname" /></p>
+year Name: <input type="text" style="width:320px" id="year" /></p>
+Video : <input type= "button" onclick = "obj.getvideo()"/><p>
+</html>
+</html>

@@ -1,0 +1,20 @@
+
++ XHR
+	- XMLHTTPREQUEST
+	- XHR is an api in the form of an object.
+	- Ready State(5 - State)
+		- 0 : Unopened
+		- 1 : Opens a connection
+		- 2 : Send a Request
+		- 3 : response is loading
+		- 4 : loaded closed
+	- Methods
+		- Open() - Points to ready state 1
+			open("method_name"(Get or POST or ...),"target_File_name"(test.php),)
+			1st 2 parametes method and target is mandatory
+			3rd paramter is a boolean value to indicate a synchronous or asynchronous communication
+
+	- Set Request header
+
+	-
+	

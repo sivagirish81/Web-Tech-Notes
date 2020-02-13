@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title> CLASS - 6 </title>
+        <script>
+            count = 1;
+            var content = new Array(4);
+            function getcontent()
+            {
+                xhr = new XMLHttpRequest();
+                xhr.onload = showcontent;
+                xhr.open("GET","test.php?count="+(count++));
+                xhr.send();
+            }
+            function showcontent()
+            {
+                document.getElementById("b1").disabled = false;
+                document.getElementById("b2").style.display = "block";
+                document.getElementById("b3").style.display = "block";
+                document.getElementById("content").innerHTML = xhr.reponseText;
+                fetchmore();
+            }
+            function fetchmore()
+            {
+                console.log("fetchmore "+count);
+	    		xhr.onload = store;
+	    		xhr.open("GET","test.php?count="+(count++));
+	    		xhr.send();
+            }
+            function store()
+            {
+                content[count - 1] = this.reponseText;
+                if (count < 4)
+                    fetchmore();
+            }
+            function showmore(ncount)
+            {
+	    		document.getElementById("content").innerHTML = content[ncount];
+	    	}
+        </script>
+    </head>
+    <body>
+        <input type = "button" id = "b1" value = "page1" onclick = "getcontent()"/>
+        <input type = "button" id = "b2" value = "page2" style = "display:none" onclick = "showmore(2)"/>
+        <input type = "button" id = "b3" value = "page3" style = "display:none" onclick = "showmore(3)"/>
+        <p id = "content"></p>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XHR CORS</title>
+<script type="text/javascript">
+obj=
+{
+	xhr: new XMLHttpRequest(),
+	getFeed: function()
+	{
+
+		//Register handler
+		this.xhr.onreadystatechange = this.showFeed;
+		
+		//open a connection to the server. GET for now
+		this.xhr.open("GET", "http://localhost/getfeed.php",true);
+		
+    	//Make the request
+		this.xhr.send();
+
+	},
+	showFeed: function()
+	{
+		//We expect an XML to be sent by the server.
+		//responseXML available ONLY if server has set
+		// the content-type to text/xml. Otherwise
+		// the stringified version of the xml is available
+		// in responseText and you have to manage..
+		if(this.readyState == 4 && this.status == 200)
+		{
+			root = this.responseXML.documentElement;
+			//Get the first headline, get its title
+			// and create an anchor with a proper href
+			item = root.getElementsByTagName("item")[0];
+			title = item.getElementsByTagName("title")[0];
+			
+			//nodeValue makes sense only for text and attribute nodes
+			headline = title.firstChild.nodeValue;
+			
+			//Get the link to populate the href
+			link = item.getElementsByTagName("link")[0];
+			
+			//nodeValue makes sense only for text and attribute nodes
+			href = link.firstChild.nodeValue;
+			
+			//Create an anchor and add it to the body
+			anchor = document.createElement("a");
+			anchor.href = href;
+			anchor.innerHTML = headline;
+			
+			document.body.appendChild(anchor);
+		}
+	
+	}
+}
+</script>
+</head>
+<body>
+<input type="button" value="GET FEED" onclick="obj.getFeed()"/>
+</form>
+</body>
+</html>

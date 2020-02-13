@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<title> CLASS - 3 </title>
+	</head>
+<!--					GET Request			-->
+
+	<script>
+		var obj = 
+		{
+			xhr : new XMLHttpRequest(),
+			getmovie : function()
+			{
+				mname = document.getElementById("mname");
+				this.xhr.open("GET","test.php?mname="+ mname.value,true);
+				this.xhr.onreadystatechange = this.update;
+				this.xhr.send();
+			},
+			update : function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+				/*
+					res = this.responseText;
+					lname = document.getElementById("lname");
+					lname.value = res;
+				*/
+					var res = this.responseText;
+					resJSON = JSON.parse(res);
+					document.getElementById("mlead").value = resJSON.lead;
+					document.getElementById("yid").value = resJSON.ReleaseYear;
+				}
+			}
+		};
+	</script>
+	<!--
+	<script>
+		var obj = 
+		{
+			xhr : new XMLHttpRequest(),
+			getmovie : function()
+			{
+				mname = document.getElementById("mname");
+				this.xhr.open("POST","test.php",true);
+				this.xhr.onreadystatechange = this.update;
+				this.xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				this.xhr.send("mname=Madagascar");
+			},
+			update : function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+					res = this.responseText;
+					lname = document.getElementById("lname");
+					lname.value = res;
+				}
+			}
+		};
+	</script>
+	-->
+	Movie Name : <input type = "text" id = "mname" onblur = "obj.getmovie()"/><p>
+	Lead Name  : <input type = "text" style = "width : 320px" id = "mlead"/><p>
+	Year	   : <input type = "text" id = "yid"/><p>
+</html>
+
+<!--
++ To convert from get to post we must use setRequestHeader
++ Make sure to change it to extract($_POST) in php
++ Ready State
+	- 1 - Nothing happens
+	- 2 - Nothing happens
+	- 3 & 4 Same
+-->

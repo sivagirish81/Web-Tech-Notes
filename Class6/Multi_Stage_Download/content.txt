@@ -1,0 +1,3 @@
+The Catering was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  ;
+<input type='text' id="isbn"/>;<input type='button' value='Search' onclick="getBook()"/>;<img src='loading.gif'  class="loading" alt='loading' height='70px' width=70px'/>
+

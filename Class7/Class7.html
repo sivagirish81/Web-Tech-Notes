@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title> Class 7 </title>
+	</head>
+	<script type = "text/javascript">
+		var obj = {
+		xhr : new XMLHttpRequest(),
+		uploadfile : function()
+		{
+			var ipfile = document.getElementById("upload").files[0];
+			var fd = new FormData();
+			fd.append("name","pes university");
+			fd.append("f","ipfile");
+			this.xhr.onload = show;
+			this.xhr.open("POST","test.php",true);
+			this.xhr.send(fd);
+		},
+		show : function()
+		{
+			var res = xhr.responseText;
+			document.getElementById("demo").innerHTML = res;
+		}
+	};
+			
+	</script>
+	<body>
+		<input type = "button" name = "f" id = "upload"/>
+		<input type = "button" value = "upload" onclick = "obj.uploadfile()"/>
+	</body>
+</html>

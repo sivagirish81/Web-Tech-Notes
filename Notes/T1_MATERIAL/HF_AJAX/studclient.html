@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS TEST</title>
+<script type="text/javascript">
+//See the <form> element. When the form is submitted, we do a POST request.
+// This is via the iframe. That is, we take all the data from the current
+// window and send it to the server via the iframe. This becomes an
+// asynchronous POST because the iframe is going to the server.
+// For doing this, we give a "name" attribute to the iframe and then
+// in the <form> element, we specify the "target" attribute which points
+// to the "name" of the iframe.
+
+// As far as getting details is concerned, we are accomplishing that on
+// the "blur" of the text box. This is a GET request.
+obj=
+{
+	usn:null,
+	ifr: null,
+	
+	getStudDetails: function()
+	{
+		this.usn = document.getElementById("usn");
+		if(this.usn == null || this.usn.value == "")
+		{
+			alert("Nothing to fetch");
+			return;
+		}
+		//Else, we have some data. We can go
+		this.ifr = document.getElementById("helper");
+		this.ifr.src = "http://localhost/getstud.php?usn=" + this.usn.value;
+	},
+	
+	// Function that will be called by the iframe when it is 
+	// triggered from the server. See the server code. It will send
+	// a javascript to the iframe. 
+	updateFields: function(message)
+	{
+		//Assume fields are separated by semi-colon
+		fields = message.split(";");
+		
+		document.getElementById("usn").value = fields[0];
+		document.getElementById("dep").value = fields[1];
+		document.getElementById("gpa").value = fields[2];
+	
+	}
+}
+</script>
+</head>
+<body/>
+<iframe name="chldfr" id="helper" width="200" height="100" ></iframe>
+<form action="savestud.php" method="POST" target="chldfr">
+<label>USN: <input type="text" id="usn" onblur="obj.getStudDetails()"/></label><p>
+<label>DEPT: <input type="text" id="dep" disabled /></label><p>
+<label>GPA: <input type="text" id="gpa" disabled /></label><p>
+<input type="submit" value="REGISTER"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title> CLASS - 3 </title>
+	</head>
+<!--					GET Request			-->
+
+	<script>
+		count = 0;
+		window.onpopstate = restore;
+		function restore(event)
+		{
+			var res = event.state;
+			document.getElementById("mid").value = res.mid;
+			document.getElementById("yid").value = res.yid;
+			document.getElementById("lid").value = res.lid;
+			
+		}
+		var obj = 
+		{
+			xhr : new XMLHttpRequest(),
+			getmovie : function()
+			{
+				mname = document.getElementById("mid");
+				this.xhr.open("GET","test.php?mid="+ mid.value,true);
+				this.xhr.onreadystatechange = this.update;
+				this.xhr.send();
+			},
+			update : function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+				/*
+					res = this.responseText;
+					lname = document.getElementById("lname");
+					lname.value = res;
+				*/
+					var res = this.responseText;
+					resJSON = JSON.parse(res);
+					document.getElementById("mid").value = resJSON.lead;
+					document.getElementById("yid").value = resJSON.ReleaseYear;
+				}
+			}
+		};
+		var hist = new Object();
+		hist["mid"] = document.getElementById("mid").value;
+		hist["lid"] = resJSON.lead;
+		hist["yid"] = resJSON.year;
+		window.history.pushState(hist,"History","test1.php?count="+count++);
+	</script>
+	<!--
+	<script>
+		var obj = 
+		{
+			xhr : new XMLHttpRequest(),
+			getmovie : function()
+			{
+				mname = document.getElementById("mname");
+				this.xhr.open("POST","test.php",true);
+				this.xhr.onreadystatechange = this.update;
+				this.xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				this.xhr.send("mname=Madagascar");
+			},
+			update : function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+					res = this.responseText;
+					lname = document.getElementById("lname");
+					lname.value = res;
+				}
+			}
+		};
+	</script>
+	-->
+	Movie Name : <input type = "text" id = "mid" onblur = "obj.getmovie()"/><p>
+	Lead Name  : <input type = "text" style = "width : 320px" id = "lid"/><p>
+	Year	   : <input type = "text" id = "yid"/><p>
+</html>
+
+<!--
++ To convert from get to post we must use setRequestHeader
++ Make sure to change it to extract($_POST) in php
++ Ready State
+	- 1 - Nothing happens
+	- 2 - Nothing happens
+	- 3 & 4 Same
+	Form data constructor
+	
+-->

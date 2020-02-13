@@ -21,15 +21,14 @@ Javascript Objects : A JavaScript object is a collection of named values
 + JavaScript variables can contain single values : var person = "John Doe";   // All strings are objects
 
 + The values are written as name : value pairs (name and value separated by a colon). : 
-		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+	var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
 
 + Methods are actions that can be performed on objects
 
 + Objects are mutable: They are addressed by reference, not by value.
-		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
-
-		var x = person;
-		x.age = 10;           // This will change both x.age and person.age
+	var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+	var x = person;
+	x.age = 10;           // This will change both x.age and person.age
 
 + You can add new properties to an existing object by simply giving it a value.
 
@@ -61,16 +60,36 @@ Javascript Objects : A JavaScript object is a collection of named values
 	person1.fullName.call(person2);  // Will return "John Doe"
 	whenever you want to invoke an other objects methods on an abject you invoke call() or apply()
 
-+  AJAX = Asynchronous JavaScript And XML.
+AJAX = Asynchronous JavaScript And XML.
+	- Need for Asynchronous Requests -:
+		* By sending asynchronously, the JavaScript does not have to wait for the server response, but can instead:
+		* execute other scripts while waiting for server response
+		* deal with the response after the response is ready
+
+	- Synchronous XMLHttpRequest (async = false) is not recommended because the JavaScript will stop executing until the server response is ready. If the server is busy or slow, the application will hang or stop.
+
 	- A browser built-in XMLHttpRequest object (to request data from a web server)
 	- JavaScript and HTML DOM (to display or use the data)
 
 	- XML Http Request
 		+ Holds the status of the XMLHttpRequest.
-			0: request not initialized
-			1: server connection established
-			2: request received
-			3: processing request
-			4: request finished and response is ready
+			- 0: request not initialized
+			- 1: server connection established
+			- 2: request received
+			- 3: processing request
+			- 4: request finished and response is ready
+
+	- Using A Callback function
+		- A callback function is a function passed as a parameter to another function.
+
+		- loadDoc("url-1", myFunction1);
+		  loadDoc("url-2", myFunction2);
+
+	
+
+		
+
+
+
 
 

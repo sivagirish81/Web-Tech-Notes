@@ -61,12 +61,6 @@ Javascript Objects : A JavaScript object is a collection of named values
 	whenever you want to invoke an other objects methods on an abject you invoke call() or apply()
 
 AJAX = Asynchronous JavaScript And XML.
-	- Need for Asynchronous Requests -:
-		* By sending asynchronously, the JavaScript does not have to wait for the server response, but can instead:
-		* execute other scripts while waiting for server response
-		* deal with the response after the response is ready
-
-	- Synchronous XMLHttpRequest (async = false) is not recommended because the JavaScript will stop executing until the server response is ready. If the server is busy or slow, the application will hang or stop.
 
 	- A browser built-in XMLHttpRequest object (to request data from a web server)
 	- JavaScript and HTML DOM (to display or use the data)
@@ -84,6 +78,27 @@ AJAX = Asynchronous JavaScript And XML.
 
 		- loadDoc("url-1", myFunction1);
 		  loadDoc("url-2", myFunction2);
+	- Need for Asynchronous Requests -:
+		+ By sending asynchronously, the JavaScript does not have to wait for the server response, but can instead:
+		+ execute other scripts while waiting for server response
+		+ deal with the response after the response is ready
+	- Synchronous XMLHttpRequest (async = false) is not recommended because the JavaScript will stop executing until the server response is ready. If the server is busy or slow, the application will hang or stop.
+
+	- AJAX Mechanics
+		+ Hidden Frames
+		+ XMLHttpRequest
+		+ Images
+		+ Javascript
+		+ Stylesheet
+
+	- Hidden IFrames 
+		– An iframe, reserved for the server data, is hidden initially. The main window which houses the iframe, is visible.
+		- On an event in the main window, the ‘src’ of the hidden iframe is changed to point to a server resource.
+		- The server returns data to the hidden iframe. The main window then makes the frame visible (if need be) or the hidden frame updates the main window with the data it received
+		- Can Store history
+		- Domain restrictions is a disadvantage.
+
+
 
 	
 

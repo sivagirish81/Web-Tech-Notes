@@ -1,64 +1,64 @@
-# CBT - 1
+# Unit - 1
 XML HttpRequest
 
-+ Update a web page without reloading the page
-+ Request data from a server - after the page has loaded
-+ Receive data from a server  - after the page has loaded
-+ Send data to a server - in the background
+	+ Update a web page without reloading the page
+	+ Request data from a server - after the page has loaded
+	+ Receive data from a server  - after the page has loaded
+	+ Send data to a server - in the background
 
-+ The responseText property returns the server response as a text string.
+	+ The responseText property returns the server response as a text string.
 
 Window.history
 
-+ The window.history object contains the browsers history.
+	+ The window.history object contains the browsers history.
 
 Javascript Basics
 
-Javascript Objects : A JavaScript object is a collection of named values
+	Javascript Objects : A JavaScript object is a collection of named values
 
-+ A primitive value is a value that has no properties or methods
+	+ A primitive value is a value that has no properties or methods
 
-+ JavaScript variables can contain single values : var person = "John Doe";   // All strings are objects
+	+ JavaScript variables can contain single values : var person = "John Doe";   // All strings are objects
 
-+ The values are written as name : value pairs (name and value separated by a colon). : 
-	var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+	+ The values are written as name : value pairs (name and value separated by a colon). : 
+		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
 
-+ Methods are actions that can be performed on objects
+	+ Methods are actions that can be performed on objects
 
-+ Objects are mutable: They are addressed by reference, not by value.
-	var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
-	var x = person;
-	x.age = 10;           // This will change both x.age and person.age
+	+ Objects are mutable: They are addressed by reference, not by value.
+		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+		var x = person;
+		x.age = 10;           // This will change both x.age and person.age
 
-+ You can add new properties to an existing object by simply giving it a value.
+	+ You can add new properties to an existing object by simply giving it a value.
 
-+ Delete Keyword
-	* The delete keyword deletes a property from an object:
-	var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
-	delete person.age;   // or delete person["age"];
+	+ Delete Keyword
+		* The delete keyword deletes a property from an object:
+		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+		delete person.age;   // or delete person["age"];
 
-	* The delete keyword deletes both the value of the property and the property itself.
+		* The delete keyword deletes both the value of the property and the property itself.
 
-	* After deletion, the property cannot be used before it is added back again.
+		* After deletion, the property cannot be used before it is added back again.
 
-	* The delete operator is designed to be used on object properties. It has no effect on variables or functions.
+		* The delete operator is designed to be used on object properties. It has no effect on variables or functions.
 
-	* The delete operator should not be used on predefined JavaScript object properties. It can crash your application.
+		* The delete operator should not be used on predefined JavaScript object properties. It can crash your application.
 
-	* The delete keyword does not delete inherited properties, but if you delete a prototype property, it will affect all objects inherited from the prototype.
+		* The delete keyword does not delete inherited properties, but if you delete a prototype property, it will affect all objects inherited from the prototype.
 
-+ The call() and apply() methods are predefined JavaScript methods.
-	var person1 = {
-  		fullName: function() {
-    	return this.firstName + " " + this.lastName;
-  		}
-	}
-	var person2 = {
-	  firstName:"John",
-	  lastName: "Doe",
-	}
-	person1.fullName.call(person2);  // Will return "John Doe"
-	whenever you want to invoke an other objects methods on an abject you invoke call() or apply()
+	+ The call() and apply() methods are predefined JavaScript methods.
+		var person1 = {
+	  		fullName: function() {
+	    	return this.firstName + " " + this.lastName;
+	  		}
+		}
+		var person2 = {
+		  firstName:"John",
+		  lastName: "Doe",
+		}
+		person1.fullName.call(person2);  // Will return "John Doe"
+		whenever you want to invoke an other objects methods on an abject you invoke call() or apply()
 
 AJAX = Asynchronous JavaScript And XML.
 
@@ -104,7 +104,10 @@ AJAX = Asynchronous JavaScript And XML.
 
 		
 
+# Unit - 2
 
+	Predictive Fetch Pattern
+	+ The Predictive Fetch pattern is a relatively simple idea that can be somewhat difficult to implement: the Ajax application guesses what the user is going to do next and retrieves the appropriate data
 
 
 

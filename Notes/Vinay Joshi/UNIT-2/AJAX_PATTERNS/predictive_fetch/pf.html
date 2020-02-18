@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<style>
+		</style>
+		<script>
+			var count=1;
+			var contents=new Array();
+			function getContent(){
+				if(contents[1])
+					document.getElementById("content").innerHTML=contents[1];
+				else {
+					xhr = new XMLHttpRequest();
+					xhr.open("get","content.php?count="+count++);
+					//xhr.onreadystatechange=showContent;
+					xhr.onloadend=showContent;
+					xhr.send();
+				}
+			}
+			function showContent(){
+				//if(this.readyState==4 && this.status==200)
+				//document.getElementById("b1").disabled=true;
+				document.getElementById("b2").style.display="inline";
+				document.getElementById("b3").style.display="inline";
+				document.getElementById("content").innerHTML=this.responseText;
+				contents[count-1]=this.responseText;
+				fetchmore();
+			}
+			function fetchmore(){
+				xhr.open("get","content.php?count="+count++);
+				xhr.onloadend=store;
+				xhr.send();
+			}
+			function store(){
+				contents[count-1]=this.responseText;
+				if(count==3)
+					fetchmore();
+			}
+			function showmore(ncount){
+				document.getElementById("content").innerHTML=contents[ncount];
+			}
+		</script>
+	</head>
+	<body>
+	<input type="button" id="b1" value="Page 1" onclick="getContent()"/>
+	<input type="button" id="b2" value="Page 2" onclick="showmore(2)" style="display:none"/>
+	<input type="button" id="b3" value="Page 3" onclick="showmore(3)" style="display:none"/>
+	<p id="content">
+	
+	</p>
+	</body>
+</html>

@@ -1,0 +1,2 @@
+<!-- image.txt -->
+<img width="250px" height="270px" src="web.jpg"/>

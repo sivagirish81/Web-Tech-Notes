@@ -1,0 +1,5 @@
+<!-- links.txt -->
+<ul>
+    <li><a href="google.com">Google</a></li>
+    <li><a href="yahoo.com">Yahoo</a></li>
+</ul>

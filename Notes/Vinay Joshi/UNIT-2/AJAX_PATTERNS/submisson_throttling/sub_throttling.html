@@ -1,0 +1,75 @@
+<html>
+<head>
+	<style>
+		#container{
+			border:solid 1px black;
+			display:none
+		}
+		.fooditem{
+			background-color:beige;
+			color:black;	
+		}
+		.fooditem:hover{
+			background-color:white;
+		}
+	</style>
+	<script>
+		var object ={
+			xhr:new XMLHttpRequest(),
+			getTerm:function(){
+			
+				object.search = document.getElementById("search"); // input text fieldset
+				object.container = document.getElementById("container"); //placeholder for food suggestions
+					
+				if(this.timer){
+					console.log("timer cleared");
+					clearTimeout(this.timer);
+				}
+				this.timer = setTimeout(object.sendTerm,1000);
+			},
+			sendTerm:function(){
+				if(localStorage.getItem(object.search.value)){
+					var cacheObj = JSON.parse(localStorage.getItem(object.search.value));
+					console.log("from cache");
+					object.populateFood(cacheObj);
+				} else {
+					object.xhr.onloadend = object.showResult;
+					object.xhr.open("get", "sample.php?term="+object.search.value);
+					object.xhr.responseType="json";
+					object.xhr.send();
+				}
+			},
+			showResult:function(){
+				var resObj = this.response;
+				if(resObj.length==0){
+					object.search.style.backgroundColor="red";
+					object.container.style.display="none";
+				}
+				else{
+					localStorage.setItem(object.search.value, JSON.stringify(resObj));
+					object.search.style.backgroundColor="";
+					object.populateFood(resObj);
+				}
+				
+			},
+			populateFood:function(resO){
+				object.container.innerHTML="";
+				for (var o in resO){
+					var iDiv = document.createElement("div");
+					iDiv.innerHTML = resO[o];
+					iDiv.className = "fooditem";
+					object.container.appendChild(iDiv);
+				}
+				object.container.style.display="block";
+			}
+		};
+		
+		</script>
+	</head>
+	<body>
+		<table border="0" cellpadding="0">
+		<tr><td>Food</td><td><input type="text" id="search" onkeyup="object.getTerm()" /></td></tr>
+		<tr><td></td><td><div id="container"></td></div></tr>
+		</table>
+	</body>
+</html>

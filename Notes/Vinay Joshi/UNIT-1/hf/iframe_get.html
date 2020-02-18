@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script>
+		function get(){
+			var ifr=document.getElementById("ifr");
+			var day=document.getElementById("day");
+			ifr.src="http://localhost/2020/get.php?day="+day.value;
+		}
+		function update(str){
+			var actarr = str.split(";");
+			var list = document.getElementById("list");
+			list.innerHTML="";
+			for (var i in actarr){
+				var item = document.createElement("li");
+				item.innerHTML=actarr[i];
+				list.appendChild(item);
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id="day"></input>
+	<button onclick="get()">Get Activities</button>
+	<iframe id="ifr" style="display:none"></iframe>
+	<ul id="list"></ul>
+</body>
+</html>

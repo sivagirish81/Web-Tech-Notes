@@ -1,0 +1,34 @@
+<html>
+<head>
+	<script>
+		function item(name,qty){
+			this.name=name;
+			this.qty=qty;
+			this.show=function(){ //multiple copies of the function created one for each instance
+				console.log("name:"+this.name+" qty:"+this.qty);
+			}
+		}
+		var i1=new item("iphone",1); 
+		var i2=new item("samsung",2);
+		// without the keyword new, it is treated like a simple function call
+		i1.show();
+		i2.show();
+		item.prototype.inc=function(){ //instances only have reference to this function
+			this.qty++;
+		}
+		i1.inc(); //inc.call(i1)
+		i1.show();
+
+		function itemdesc(name,qty,desc){
+			item.call(this,name,qty);
+			this.desc=desc;
+		}
+		
+		itemdesc.prototype=new item();
+		itemdesc.prototype.constructor=itemdesc;
+		
+		var id = new itemdesc("ipad",1,"ipad 4X4");
+		id.inc();
+	</script>
+</head>
+</html>

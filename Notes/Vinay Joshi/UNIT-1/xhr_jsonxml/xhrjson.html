@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XHR AJAX</title>
+<script type="text/javascript"> 
+obj = 
+{
+	xhr: new XMLHttpRequest(),
+
+	getMsg: function()
+	{
+	
+		this.xhr.onreadystatechange = this.showMsg;
+			
+		this.xhr.open("get", "getmsg_json.php", true);
+	
+		this.xhr.send();
+	},
+	
+	
+	showMsg: function()
+	{
+		if(obj.xhr.readyState == 4 && obj.xhr.status== 200)
+		{
+			console.log(this.responseText)
+			myobj = JSON.parse(this.responseText);
+			str=""
+			for (var i in myobj)
+				str = str+(myobj[i].name+" - "+myobj[i].srn+"<br/>");
+			document.getElementById("list").innerHTML=str
+			//or
+			// set this.xhr.responseType="json" before calling send and access this.response directly as an object. JSON.parse is done automatically
+		}
+	}
+}
+</script>
+</head>
+<body>
+<input type="button" value="GET MSG" onclick="obj.getMsg()"/>
+<p id="list"></p>
+</body>
+</html>

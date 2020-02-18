@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<script>
+		var obj={
+			xhr:new XMLHttpRequest(),
+			getvideo:function(){
+				this.xhr.onreadystatechange=this.showvideo; 
+				this.xhr.open("GET","getvid.php",true);
+				this.xhr.responseType="blob";
+				this.xhr.send();
+			},
+			showvideo:function(){
+				if(this.readyState==4&&this.status==200){
+					data = this.response;
+					vid = document.createElement("video");
+					vid.controls=true;
+					vid.src=URL.createObjectURL(data);
+					document.body.appendChild(vid);
+				}
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<input type="button" value="Get Binary" onclick="obj.getvideo()"/>
+	</body>
+</html>

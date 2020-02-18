@@ -1,0 +1,31 @@
+<html>
+<head>
+	<script>
+		var xhr = new XMLHttpRequest();
+		function getstat(){
+			room = document.getElementById("room");
+			xhr.open("post","getstat.php",true);
+			xhr.onreadystatechange=show;
+			/*xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhr.send("room="+room.value+"&type="+type.value);*/
+			
+			var fd =  new FormData();
+			fd.append("room",room.value);
+			fd.append("type",type.value);
+			xhr.send(fd);
+		}
+		function show(){ //show.call(xhr);
+			if(this.readyState==4 && this.status==200){
+				stat = document.getElementById("stat");
+				stat.innerHTML=this.responseText;
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id="room"></input>
+	<input type="text" id="type"></input>
+	<button onclick="getstat()">Get Availability</button>
+	<div id="stat"></div>
+</body>
+</html>

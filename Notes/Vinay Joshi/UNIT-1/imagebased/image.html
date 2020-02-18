@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script>
+			function getstat(){
+				room = document.getElementById("room");
+				stat = document.getElementById("stat");
+				img = document.createElement("img");
+				img.onload = success;
+				img.onerror = failure;
+				img.src = "http://localhost/2020/getstatus.php?room="+room.value;
+			}
+			function success(){
+				if(img.width==1)
+					stat.innerHTML="Room Available";
+				if(img.width==2)
+					stat.innerHTML="Room Unavailable";
+			}
+			function failure(){
+				stat.innerHTML="Room check failed. Try after some time.";
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="room"></input>
+		<button onclick="getstat()">Get Available</button>
+		<div id="stat"></div>
+	</body>
+</html>

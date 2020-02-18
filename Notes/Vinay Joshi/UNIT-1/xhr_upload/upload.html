@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		</style>
+		<script>
+			var obj={
+				xhr:new XMLHttpRequest(),
+				uploadFile:function(){
+					var ipfile=document.getElementById("upload").files[0];
+					var fd=new FormData();
+					fd.append("name","vidhu")
+					fd.append("f",ipfile)
+					this.xhr.onload=this.showResult;
+					
+					this.xhr.open("POST","upload.php",true);
+										
+					this.xhr.send(fd);
+				},
+				showResult:function(){
+					alert(this.responseText);
+				}
+			}
+		
+		</script>
+	</head>
+	<body>
+		<input type="file" id="upload"/>
+		<input type="button" onclick="obj.uploadFile()" id="uploadBtn" value="UPLOAD" />
+
+
+
+
+	</body>
+</html>

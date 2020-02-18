@@ -1,0 +1,14 @@
+<script>
+	var item1={
+		name:null,
+		price:null,
+		show:function(){
+			console.log(this.name+this.price);
+		}
+	}
+	item1.show();
+	var item2=Object.create(item1,{name:{value:"Reebok"},price:{value:"Rs 1000"},desc:{value:"new prod"}});
+	item2.show();
+	console.log(item1);
+	console.log(item2);
+</script>

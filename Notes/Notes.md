@@ -155,15 +155,14 @@ Submission Throttling
 	This array is parsed inorder to convert it into a javascript array.
 
 RSS
-	+ XML Parsing
+
+	XML Parsing
 	this.processNews = function()
 	{
 		if(xhr.readyState == 4 && xhr.status == 200)
 		{
 			root = xhr.responseXML.documentElement;
-			
 			item = root.getElementsByTagName("item")[0];
-			
 			//get title and link
 			title = item.getElementsByTagName("title")[0];
 			link = item.getElementsByTagName("link")[0];

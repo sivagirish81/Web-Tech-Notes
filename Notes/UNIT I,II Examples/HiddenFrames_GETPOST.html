@@ -1,0 +1,148 @@
+<html>
+<script type="text/javascript">
+function chkUser()
+{
+	usr = document.getElementById("usr");
+	helper = document.getElementById("helper");
+	helper.src = "http://localhost/chkuser.php?uid="  + usr.value;
+}
+function setStat(status)
+{
+	sp = document.getElementById("pwd");
+	sp.value = status.split(";")[1];
+	sp.style.fontStyle = "italic";
+	sp.style.color = "red";
+}
+</script>
+</head>
+<body>
+<label>USERNAME:<input type="text" id="usr" onblur="chkUser()"/></label><span id="stat"></span><p>
+<label>PASSWORD:<input type="text" id="pwd"/></label><p>
+<input type="button" value="REGISTER"/>
+<iframe id="helper" name="helper" width="100" height="100" style="display:none;"/>
+</body>
+</html>
+
+////////////////////////////////////////////////////////////////////
+
+
+<form action = "http://localhost/WT/sample.php" method = "post" target = "hframe">
+username: <input type = "text" name = "usr" placeholder= "Enter user name" /><br>
+password: <input type = "text" name = "pwd" id = "pwd" placeholder= "Enter user password"/><br>
+<button value ="Register">Register</button>
+<iframe id = "hframeid" name = "hframe" height = "200"  width = "200" style = "display:none"></iframe>
+</form>
+<html>
+<script type = "text/javascript">
+<?php
+extract($_POST);
+if(($uid == "aruna") || ($uid == "nithya"))
+{
+	echo "parent.setstat('$uid;user already exists;');";
+	
+}
+else
+{
+	echo "parent.setstat('$uid;user does not exists;')";
+}
+
+?>
+</script>
+</html>
+
+
+/////////////////////////////////////////////////literal form
+<html>
+<head><title>MAIN FRAME</title>
+<script type="text/javascript">
+var obj =
+{
+	getElectives: function()
+	{
+		var dep = document.getElementById("dept");
+		
+		if(dep.value == "")
+		{
+			alert("Please enter a department");
+			return;
+		}
+		else
+		{
+			//Get the helper frame
+			var helper = document.getElementById("ifr");
+			
+			//Force a GET request to the server
+			helper.src = "http://localhost/getelectives.php?dept=" + dep.value;
+
+		}
+	},
+	
+	populateElectives: function(electives)
+	{
+		//The returned string is ";" separated
+		//0th element is the dept. The others
+		// are the electives
+		
+		var retArr = electives.split(";");
+		
+		document.getElementById("dept").value = retArr[0];
+		
+		//Loop through the electives 
+		var sel = document.getElementById("el");
+		sel.innerHTML = "";
+		
+		for(var j = 1; j < retArr.length;j++)
+		{
+			var opt = document.createElement("option");
+			
+			opt.innerHTML = retArr[j];
+			
+			sel.appendChild(opt);
+		
+		}
+	}
+};
+</script>
+</head>
+<body>
+<label>DEPT:<input type="text" id="dept" placeholder="Your Dept Here" onblur="obj.getElectives()" /></label><p>
+<label>ELECTIVES:
+<select id="el" style="width:100px">
+</select>
+<iframe id="ifr" width="200" height="100" style="display:none"/>
+</label>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AJAX RESPONSE</title>
+<script type="text/javascript">
+<?php
+	extract($_GET);
+
+	$file = fopen("electives.txt","r");
+	while($line = fgets($file))
+	{
+		$modline = trim($line);
+		
+		$arr = explode(";",$modline);
+		$found = false;
+		if($dept == $arr[0])
+		{
+			$found = true;
+			break;
+		}
+	}
+	if($found == true)
+	{
+		echo "parent.obj.populateElectives('$modline');";
+	}
+?>
+</script>
+</head>
+<body>
+</body>
+</html>
+

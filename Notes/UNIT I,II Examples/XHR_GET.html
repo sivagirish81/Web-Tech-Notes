@@ -1,0 +1,34 @@
+<html>
+<script>
+var obj = 
+{
+xhr :  new XMLHttpRequest(),
+async : function()
+{
+var mname = document.getElementById("mname");
+this.xhr.onreadystatechange = this.update;
+this.xhr.open("GET","sample.php?mname=" +mname.value,true);
+this.xhr.send();
+},
+update : function()
+{
+console.log("hello");
+if(this.readyState == 4 && this.status == 200)
+{
+var res = this.responseText;
+document.getElementById("mlead").value = res;
+}
+}
+};
+
+</script>
+Name: <input type = "text" id = "mname" name = "mname" onblur = "obj.async()"></input></br>
+Title and year: <input type = "text" style = "width:500px" id = "mlead" name = "mlead"></input>
+</html>
+
+/////////////////////////////////////////////////////////////////////
+<?php
+extract($_GET);
+echo "The movie $mname is led by AkshayKumar in 2020";
+?>
+

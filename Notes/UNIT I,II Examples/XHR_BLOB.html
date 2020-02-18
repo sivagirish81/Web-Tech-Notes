@@ -1,0 +1,39 @@
+<html>
+<script>
+var obj = {
+xhr : new XMLHttpRequest(),
+getvideo: function ()
+{
+this.xhr.onreadystatechange = this.showvideo;
+this.xhr.open("GET","sample.php", true);
+this.xhr.responseType = "blob";
+this.xhr.send();
+},
+showvideo: function ()
+{
+
+if(this.readyState == 4 && this.status == 200)
+{
+var res = this.response;
+vid = document.createElement("video");
+vid.controls = true;
+vid.autoplay = true;
+vid.src = URL.createObjectURL(res);
+document.body.appendChild(vid);
+}
+else
+{
+}
+}
+};
+</script>
+<button id="bid" value = "Get a video" onclick = "obj.getvideo()">Please get me a cute little video :):)</button>
+</html>
+///////////////////////////////////////////////////////////////////////
+<?php
+header("Content-type:video/MOV");
+$file = fopen("LK.MOV","rb");
+$f = fread($file,filesize("LK.MOV"));
+echo $f;
+fclose($file);
+?>

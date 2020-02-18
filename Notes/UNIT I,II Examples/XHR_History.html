@@ -1,0 +1,60 @@
+
+<html>
+<script>
+count=0;
+			window.onpopstate=restore;
+			function restore(e){
+				 var res=e.state;
+				 document.getElementById("mid").value=res.mid;	
+				 document.getElementById("lid").value=res.lid;	
+				 document.getElementById("yid").value=res.yid;	
+				 }
+var obj = {
+xhr : new XMLHttpRequest(),
+async :  function ()
+{
+mid = document.getElementById("mid");
+this.xhr.onreadystatechange = this.update;
+this.xhr.open("GET" ,"sample.php?mid=" +mid.value, true);
+this.xhr.send();
+},
+update : function ()
+{
+if(this.readyState == 4 && this.status == 200)
+{
+res = this.responseText;
+console.log(res);
+var resJson = JSON.parse(res);
+document.getElementById("lid").value = resJson.lead;
+document.getElementById("yid").value = resJson.year;
+
+var hist=new Object();
+hist["mid"]=document.getElementById("mid").value;
+hist["lid"]=resJson.lead;
+hist["yid"]=resJson.year;
+window.history.pushState(hist,"History","http://localhost/WT/sample.php?count="+count++);
+}
+}
+};
+
+</script>
+movie: <input type = "text" id= "mid" name = "mid" onblur = "obj.async()"/> </br>
+lead:  <input type = "text" id = "lid" name="lid"/> </br>
+year: <input type = "text" id= "yid" name = "yid"/> </br>
+</html>
+
+
+/////////////////////////////////////////////////////////////////////////////////
+<?php
+extract($_GET);
+if($mid == "missionmangal")
+{
+	$retarr = array("lead" => "Akshay Kumar" , "year" => "2019");
+	
+}
+else
+{
+	$retarr = array("error"=>"movie not found");
+}
+echo json_encode($retarr);
+?>

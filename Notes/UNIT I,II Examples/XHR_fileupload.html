@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		</style>
+		<script>
+			var obj={
+				xhr:new XMLHttpRequest(),
+				uploadFile:function(){
+					var ipfile=document.getElementById("upload").files[0];
+					var fd=new FormData();
+					fd.append("name","aruna")
+					fd.append("f",ipfile)
+					this.xhr.open("POST","http://localhost/WT/sample.php",true);
+					this.xhr.send(fd);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<input type="file" name = "f" id="upload"/>
+		<input type="button" onclick="obj.uploadFile()" id="uploadBtn" value="UPLOAD" />
+	</body>
+</html>
+
+//////////////////////////////////////////////////////////////////////////////
+<?php
+	extract($_POST);
+	print_r($_FILES);
+	$fname = $_FILES['f']['name'];
+	$fsize = $_FILES['f']['size'];
+	$ftemp = $_FILES['f']['tmp_name'];
+	$destPath = realpath(dirname(__FILE__));
+	$destPath = "$destPath/$fname";	
+	if(move_uploaded_file($ftemp, "$destPath")){
+	echo "file uploaded to $destPath";
+	}
+	else{
+	echo "something went wrong..file not uploaded";
+	}
+?>
+
+

@@ -1,0 +1,19 @@
+<html>
+<script>
+function makerequest()
+{
+var oscript = document.createElement("script");
+oscript.type = "text/javascript";
+oscript.src = "sample.js";
+document.body.appendChild(oscript);
+}
+function callback(status)
+{
+var con = document.getElementById("con");
+con.value  = status;
+}
+
+</script>
+<input type = "button" value = "click me" onclick = "makerequest()"/>
+<input type = "text" id="con"/>
+</html>

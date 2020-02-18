@@ -1,0 +1,92 @@
+
+<script>
+//Object Constructor form:
+var object = new Object();
+object.name = "Robert";
+object.age = 23;
+object.sayname = function()
+{
+document.write(object.name);
+}
+
+object.sayname();
+
+//literal form:	  
+var object = {
+name : "Robert",
+age : 23,
+sayname : function()
+{
+document.write(object.name);
+}
+}
+object.sayname();	 
+
+//Any function can be a constructor
+function person(fname,lname,age)
+{
+this.fname = fname;
+this.lname = lname;
+this.sayname = function(){
+document.write(this.fname + this.lname);
+}
+}
+
+//converting the same to arguments[],an array like structure
+function person()
+{
+document.write(arguments[0] + arguments[1]);
+}
+//
+var person1 = new person("RObert","s",35);
+var person2 = new person("TOM","a",40);
+console.log(person1);
+console.log(person2);
+console.log(person1 instanceof person);
+console.log(typeof person1);
+
+//converting the same to prototype
+function person(fname,lname)
+{
+this.fname = fname;
+this.lname = lname;
+}
+person.prototype.sayname = function()
+{
+document.write("hi" +  this.fname);
+}
+var person1 = new person("Robert","Sebesta");
+var person2 = new person ("Tom" ,"Mitchell");
+
+function greet()
+{
+console.log(arguments[0] +arguments[1] + "        " +this.fname);
+}
+var arr = ["welcome","bye","seeyou"];
+
+greet.call(person2,"goodmorning",arr);
+
+
+
+//Inheriting the prototype
+function Rectangle(length,breadth)
+{
+this.length=length;
+this.breadth=breadth;
+}
+Rectangle.prototype.calcArea=function()
+{
+	console.log(this.length*this.breadth);
+}
+function Square(size)
+{
+	Rectangle.call(this,size,size);
+}
+Square.prototype = new Rectangle();
+var sq = new Square(6);
+sq.calcArea();
+	  
+</script> 
+	  
+
+	  

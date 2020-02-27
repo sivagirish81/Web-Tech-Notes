@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>WebSocket - Class 12</title>
+        <script>
+            function wschat()
+            {
+                var wsUrl = "ws://localhost:12345/Web_Socket.php";
+                websocket = new WebSocket(wsUrl);
+                websocket.onopen = function(ev)
+                {
+                    alert("Connection to server");
+                }
+                websocket.onclose = function(ev)
+                {
+                    alert("Disconnected");
+                }
+                websocket.onmessage = function(ev)
+                {
+                    console.log("Message is " + ev.data);
+                }
+                websocket.onerror = function(ev)
+                {
+                    alert("ERROR " + ev.data);
+                }
+            }
+
+            //Onblur event
+            function sendmsg()
+            {
+                var mymessage = document.getElementById("msgbox").value;
+                websocket.send(mymessage);
+            }
+        </script>
+    </head>
+    <body onload = "wschat()">
+        <input type = "text" id = "msgbox" onblur="sendmsg()"/>
+    </body>
+</html>

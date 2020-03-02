@@ -6,12 +6,19 @@
 # REST - Representational State Transfer
 
 	Representation / State / Transfer
-		- World Wide WEB - Satifies major five constraints
+		- World Wide WEB - Satisfies major five constraints
 		- 5 Constraints
 			$ Client - Server Architecture
 			$ Stateless - Does not cache any state information
 			$ Allow Client To Cache
 			$ Layered Architecture
-			$ URL should be a uniform Interface
-		- Optional Contraint
-			^ 
+			$ URL should be a uniform interface																		 
+
+# Soap - Communicaion based protocol
+
+# CRUD
+
+  + Create - POST
+  + Update - PUT
+  + Read - GET
+  + Delete - Delete

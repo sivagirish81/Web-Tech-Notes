@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^getweather/([a-z]+)\.(xml|json) weatherProc.php?city=$1&format=$2
+RewriteRule ^update/([a-z]+)\.(xml|json) weatherProc.php?city=$1&format=$2

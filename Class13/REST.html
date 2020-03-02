@@ -1,0 +1,39 @@
+
+<html>
+    <head>
+        <title>
+            REST - API
+        </title>
+    </head>
+    <script>
+
+        function getweather()
+        {
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = showweather;
+            city = document.getElementById("city");
+            xhr.open("GET","fetchweather.php?city="+city.value);
+            xhr.send();
+        }
+
+        function showweather()
+        {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            {
+                newdiv = document.createElement("div");
+                wdata = JSON.parse(xhr.responseText);
+                newdiv.innerHTML = "Temperature" + wdata.temp + "Humidity" + wdata.humidity;
+                document.body.appendChild(newdiv);
+            }
+        }
+        
+    </script>
+    <body>
+        <labe>
+            CITY : <input type = "text" id = "city"/>
+            <p>
+                <input type="button" value="GET WEATHER" onclick = "getweather()"/>
+            </p>
+        </labe>
+    </body>
+</html>
